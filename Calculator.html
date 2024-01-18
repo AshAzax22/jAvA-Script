@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CALCULATOR</title>
+    </head>
+    <style>
+        body{
+            background-color: black;
+            font-family: arial;
+            font-weight: bold;
+        }
+        
+        .container{
+            border: solid yellow 3px;
+            
+            
+        }
+
+        .result{
+            border: solid white 3px;
+            color:white;
+            display: inline;
+        }
+        .numpad{
+            font-size: 30px;
+            border:none;
+            margin:7px;
+            height: 50px;
+            width: 50px;
+            border-radius:60px;
+            background-color: grey;
+            cursor: pointer;
+            color: white;
+        }
+        .numpad:hover{
+            background-color: rgba(128, 128, 128, 0.516);
+        }
+        .operator{
+            background-color: rgb(243, 215, 9);
+        }
+        .operator:hover{
+            background-color:  rgba(243, 216, 9, 0.534);
+        }
+        
+    </style>
+    <body>
+        <div class="container">
+        <p class="result">0</p>
+        </div>
+        
+        
+        <button onclick="funInput(7);" 
+        class="numpad">7</button>
+        
+        <button onclick="funInput(8);" 
+        class="numpad">8</button>
+        
+        <button onclick="funInput(9);" 
+        class="numpad">9</button>
+        
+        <button onclick="operation('+');"    
+        class="numpad operator">+</button>
+        
+        <br>
+        
+        <button onclick="funInput(4);" 
+        class="numpad">4</button>
+        
+        <button onclick="funInput(5);" 
+        class="numpad">5</button>
+        
+        <button onclick="funInput(6);" 
+        class="numpad">6</button>
+        
+        <button onclick="operation('-');" class="numpad operator">-</button>
+        
+        <br>
+        
+        <button onclick="funInput(1);" 
+        class="numpad">1</button>
+
+        <button onclick="funInput(2);" 
+        class="numpad">2</button>
+        
+        <button onclick="funInput(3);" 
+        class="numpad">3</button>
+        
+        <button onclick="operation('*');"class="numpad operator">*</button>
+        
+        <br>
+        
+        <button onclick="funInput(0);" 
+        class="numpad">0</button>
+        
+        <button onclick="del();"class="numpad">del
+        </button>
+        
+        <button onclick="
+            varB=inpVal;
+            inpVal=0;
+            CALC();
+        "
+         class="numpad">=</button>
+        
+        <button onclick="operation('/');"class="numpad operator">/</button>
+
+        
+
+
+    <script>
+        let inpVal=0;
+        let result =0;
+        let operator="none";
+        let varA=0;
+        let varB=0;
+        objResult=document.querySelector(".result");
+
+        document.body.addEventListener("keydown",(event)=>
+        {   
+            if(parseInt(event.key)>=0){
+                funInput(parseInt(event.key));
+            }
+
+            else if(event.key=="=" || event.key=="Enter"){
+                varB=inpVal;
+                inpVal=0;
+                CALC();
+            }
+            else if(event.key=="Backspace"){
+                del();
+            }
+            else{
+                operation(event.key);
+            }
+        })
+
+        function funInput(inp){ 
+            inpVal=inpVal*10 + inp;
+            objResult.innerHTML+=inp;
+        }
+
+        function del(){
+            inpVal=parseInt(inpVal/10);
+            console.log(inpVal);
+            objResult.innerHTML=inpVal;
+        }
+
+        function operation(kind){
+            varA=inpVal;
+            objResult.innerHTML=inpVal+kind;
+            inpVal=0;
+            operator=kind;
+            }
+
+        function CALC(){
+            if(operator=="+"){
+                result=varA+varB;
+            }
+            else if (operator=="-") {
+                result=varA-varB;
+            }
+            else if(operator=="*"){
+                result=varA*varB;
+            }
+            else{
+                result=varA/varB;
+            }
+            objResult.innerHTML=result;
+            inpVal=result;
+            varB=0;
+            varA=0;
+            operator="none";
+        }
+        
+
+    </script>
+
+    </body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ARRAYS and LOOPS</title>
+    
+    <style>
+        body{
+            font: arial;
+        }
+        .names{
+            margin: auto;
+            display: grid;
+            grid-template-columns: 200px 100px 100px;
+            grid-template-rows: 40px;
+            font-family:arial ;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .input{
+            
+            display: grid;
+            grid-template-columns: 200px 100px 100px 100px;
+            
+        }
+        .input_ele{
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 20px;
+        }
+        button{
+            padding: 10px;
+            border:none;
+            border-radius: 30px;
+            color: white;
+        }
+        button:hover{
+            cursor: pointer;
+        }
+        .hide_or_show{
+            background-color: orange;
+            
+        }
+        .add_but{
+            background-color: rgb(69, 214, 69);
+        }
+        input{
+            border: none;
+            background-color: rgb(184, 184, 184);
+            border-radius: 20px;
+            color: white;
+            
+        }
+        input::placeholder{
+            color: white;  
+        }
+        .remove_but{
+            background-color: red;
+            
+        }
+        
+        
+    </style>
+    </head>
+    <body>
+        <div class="input">
+        <input class="nameIn input_ele"    placeholder="  enter a name">
+        <input class="ageIn input_ele"     placeholder="  enter age">
+        <button onclick="addToArray();disp()" class="input_ele add_but">Add Entry</button>
+        <button onclick="
+            HideAndShow();
+        " class="hide_or_show input_ele">Show List</button>
+        </div>
+        <br>
+        <div class="names"></div>
+
+        
+        <script>
+            let arrNames=[];
+
+
+            document.body.addEventListener("keydown",()=>
+            {
+                if(event.key=="Enter"){
+                    addToArray();
+                    disp();
+                }
+            })
+
+            function HideAndShow(){
+                if(document.querySelector(".hide_or_show").innerHTML=="Show List"){
+                    document.querySelector(".hide_or_show").innerHTML="Hide List";
+                    disp();
+                }
+                else{
+                    document.querySelector(".hide_or_show").innerHTML="Show List";
+                    document.querySelector(".names").innerHTML="";
+                }
+            }
+
+            function addToArray(){
+                document.querySelector(".names").innerHTML="";
+                let nameInput=document.querySelector(".nameIn");
+                let ageInput=document.querySelector(".ageIn");
+                if(nameInput.value=="" || ageInput.value==""){
+                    alert(`fill all fields`);
+                    return;
+                }
+                let tempObj={ name: nameInput.value , age : ageInput.value};
+                arrNames.push(tempObj);
+                nameInput.value="";
+                ageInput.value="";
+            
+            }
+
+            function remove_entry(index){
+                document.querySelector(".names").innerHTML="";
+                arrNames.splice([index],1);
+                disp();
+
+            }
+
+            function disp(){
+                if(document.querySelector(".hide_or_show").innerHTML=="Show List"){
+                    return;
+                }
+                if(arrNames.length==0){
+                    document.querySelector(".names").innerHTML="";
+                }
+                // for(let i=0;i<arrNames.length;i++){
+                //     document.querySelector(".names").innerHTML+=`
+                //             <div>${arrNames[i].name}</div>
+                //             <div>${arrNames[i].age}</div>
+                //             <div>
+                //                 <button onclick=" remove_entry(${i});"
+                //                 class="remove_but">Remove</button>
+                //             </div>`;
+                // }
+                arrNames.forEach(function(value,index){
+                    document.querySelector(".names").innerHTML+=`
+                            <div>${value.name}</div>
+                            <div>${value.age}</div>
+                            <div>
+                                <button onclick=" remove_entry(${index});"
+                                class="remove_but">Remove</button>
+                            </div>`;    
+                })
+            }
+
+        </script>
+    </body>
+</html>

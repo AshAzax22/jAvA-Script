@@ -1,0 +1,22 @@
+
+<html>
+   
+    <head>
+        <title>DOM</title>
+    </head>
+
+    <body>
+        <button onclick="
+            lightMode();"             
+            class = 'js-button'
+            >dark</button>
+
+        <script>
+            function lightMode(){
+                let button = document.querySelector('.js-button');
+                if(button.innerHTML === 'dark'){button.innerHTML='light';}
+                else{button.innerHTML='dark';}
+            }
+        </script>
+    </body>    
+</html>

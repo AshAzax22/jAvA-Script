@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html>
+    <head><title>finally a game</title></head>
+    <style>
+        body{
+            background-color:black;
+            color:white;
+            font-family: Arial;
+            font-weight: bold;
+            margin-left: 27%;
+            
+        }
+        
+        .options{
+            background-color: black;
+            font-size: 20px;
+            margin :20px;
+            
+            border: 7px solid white;
+            padding :30px;
+            width: 180px;
+            height: 180px;
+            border-radius: 90px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .options:hover{
+            background-color:rgb(227, 236, 57)
+        }
+
+        .user_choice{
+            background-color: white;
+            border:none;
+            color: black;
+            padding: 20px;
+            font-size: 15px;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        .user_choice:hover{
+            background-color: rgb(208, 208, 208);
+        }
+    </style>
+    <body>
+        <button class="options" onclick="
+            choice='rock';
+            play();
+        ">Rock</button>
+        
+        <button class="options" onclick="
+            choice='paper';
+            play();    
+        ">Paper</button>
+
+        <button class="options" onclick="
+            choice='scissors'
+            play();
+        ">Scissors</button>
+        
+        <br>
+
+        <button class="user_choice" style="margin-left: 23% ;" 
+            onclick="
+            score.win=0;
+            score.lose=0;
+            score.tie=0;
+            dispScore();
+        ">Reset score</button>
+
+        <button onclick="autoplay()" class=" user_choice auto_but">Auto Play</button>
+
+
+        <p class="score_disp"></p>
+        <p class="choice_disp"></p>
+        
+        <button class="user_choice" onclick="
+            setScore();
+        ">set score to local storage</button>
+        
+        <button class="user_choice" onclick="
+            updateScore();
+        ">fetch score from local storage</button>
+        
+        <button class="user_choice" onclick="
+            localStorage.removeItem('score');
+            alert('save file deleted successfully.');
+        ">delete local score</button>
+
+        
+        <script>
+            
+            let choice= 'none';
+            let score={win : 0,lose: 0,tie :0};
+            dispScore();
+
+            let autoPlaying=false;
+            let intervalID=null;
+            
+            function autoplay(){
+                if(autoPlaying){
+                    autoPlaying=false;
+                    clearInterval(intervalID);
+                    document.querySelector(".auto_but").innerHTML=`Auto Play`;
+                    return;
+                }
+                intervalID=setInterval(function(){
+                    choice=['rock', 'paper', 'scissors'][parseInt(Math.random()*3)];
+                    play();
+                }, 1000);
+                autoPlaying=true;
+                document.querySelector(".auto_but").innerHTML=`Stop`;
+            }
+
+            function play(){
+                let compChoice=['rock', 'paper', 'scissors'][parseInt(Math.random()*3)];
+                console.log(compChoice);
+                compareChoices(choice, compChoice);
+                dispScore();
+            }
+            
+            function compareChoices(userChoice, computerChoice) {
+                if (userChoice === computerChoice) {
+                    score.tie+=1;
+                    document.querySelector(".choice_disp").innerHTML=`You chose  ${userChoice}  Computer chose ${computerChoice} It's a tie!`;
+                } else if (
+                    (userChoice === 'rock' && computerChoice === 'scissors') ||
+                    (userChoice === 'paper' && computerChoice === 'rock') ||
+                    (userChoice === 'scissors' && computerChoice === 'paper')
+                ) {
+                    score.win+=1;
+                    document.querySelector(".choice_disp").innerHTML=`You chose  ${userChoice}  Computer chose  ${computerChoice}  You win!`;
+                } else {
+                    score.lose+=1;
+                    document.querySelector(".choice_disp").innerHTML=`You chose ${userChoice}  Computer chose ${computerChoice} .You lose.`;
+                }
+            }
+            
+            function dispScore(){
+                document.querySelector(".score_disp").innerHTML= `Wins : ${score.win} lose : ${score.lose} tie : ${score.tie}`;
+            }
+
+            function setScore(){
+                localStorage.setItem('score', JSON.stringify(score));
+                alert('score saved into local storage.');
+            }
+
+            function updateScore(){
+                let score_temp=JSON.parse(localStorage.getItem('score'));
+                if(score_temp===null){
+                    alert('no saved score in storage.')
+                }
+                else{
+                    score=score_temp;
+                    alert('score fetched successfully');
+                    dispScore();
+                }
+            }
+        </script>
+    </body>
+</html>

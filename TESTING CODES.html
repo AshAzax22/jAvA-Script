@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Just checking how things work</title></head>
+    <body>
+        <button onclick="
+            obj.meth();
+            console.log('function called');
+            ">Obj function call</button>
+        <button onclick="
+            json_str= JSON.stringify( obj);
+            delete obj;
+            console.log(json_str);
+            ">obj to json</button>
+        <button onclick="
+            obj2=JSON.parse(json_str);
+            console.log(obj);
+
+            ">json to obj</button>
+    </body>
+    <script>
+        let json_str;
+        let obj = { v1: 'name' , v2  : 10 , meth : function () { alert('hey there' );} };
+    </script>
+</html>

@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+    <head><title>finally a game</title></head>
+    <body>
+        <button onclick="choice='rock'">Rock</button>
+        
+        <button onclick="choice='paper'">Paper</button>
+
+        <button onclick="choice='scissors'">Scissors</button>
+        <br>
+        <button onclick="
+            let compChoice=['rock', 'paper', 'scissors'][parseInt(Math.random()*3)];
+            console.log(compChoice);
+            compareChoices(choice, compChoice);
+        ">Play</button>
+
+        <button onclick="
+            alert(`Wins : ${score.win} lose : ${score.lose} tie : ${score.tie}`)
+        ">Score</button>
+
+        <button onclick="
+            score.win=0;
+            score.lose=0;
+            score.tie=0;
+        ">Reset score</button>
+
+        <br>
+        <button onclick="
+            setScore();
+        ">set score to local storage</button>
+        <button onclick="
+            updateScore();
+        ">fetch score from local storage</button>
+        <button onclick="
+            localStorage.removeItem('score');
+        ">delete local score</button>
+
+        <script>
+            
+            let choice= 'none';
+            let score={win : 0,lose: 0,tie :0};
+
+
+            function compareChoices(userChoice, computerChoice) {
+                if (userChoice === computerChoice) {
+                    score.tie+=1;
+                    alert(`You chose  ${userChoice}  Computer chose ${computerChoice} It's a tie! \n Wins : ${score.win} lose : ${score.lose} tie : ${score.tie}`);
+                } else if (
+                    (userChoice === 'rock' && computerChoice === 'scissors') ||
+                    (userChoice === 'paper' && computerChoice === 'rock') ||
+                    (userChoice === 'scissors' && computerChoice === 'paper')
+                ) {
+                    score.win+=1;
+                    alert(`You chose  ${userChoice}  Computer chose  ${computerChoice}  You win! \n Wins : ${score.win} lose : ${score.lose} tie : ${score.tie}`);
+                } else {
+                    score.lose+=1;
+                    alert(`You chose ${userChoice}  Computer chose ${computerChoice} .You lose. \n Wins : ${score.win} lose : ${score.lose} tie : ${score.tie}`);
+                }
+            }
+
+            function setScore(){
+                localStorage.setItem('score', JSON.stringify(score));
+                alert('scoer set into local storage');
+            }
+
+            function updateScore(){
+                let score_temp=JSON.parse(localStorage.getItem('score'));
+                if(score_temp===null){
+                    alert('no saved score in storage.')
+                }
+                else{
+                    score=score_temp;
+                    alert('score fetched successfully');
+                }
+            }
+        </script>
+    </body>
+</html>

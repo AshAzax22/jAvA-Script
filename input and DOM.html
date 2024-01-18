@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>type in already</title>
+    </head>
+    <body>
+        <input placeholder="enter your gender" class="gender" onkeydown="
+            if(event.key=='Enter'){
+                magic();
+            }        
+            ">
+        <p class="para"></p>
+    </body>
+    <script>
+        function magic(){
+            var input = document.querySelector(".gender");
+            console.log(input.value);
+            if(input.value == 'male'){
+                document.querySelector(".para").innerHTML=`hey there buddy, how you doin.`;
+            }
+            else if( input.value=='female'){
+                document.querySelector(".para").innerHTML=`hello there sweetie, how are you doing today?`;
+            }
+            else{
+                document.querySelector(".para").innerHTML=`just give up already nigga, nonody accepting you`;
+            }
+        }
+    </script>
+</html>
